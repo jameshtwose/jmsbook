@@ -1,6 +1,9 @@
 from typing import Optional, List
 
 from fastapi import FastAPI, Response, status, HTTPException, Depends
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, FileResponse
 from sqlalchemy.orm import Session
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -11,12 +14,19 @@ from . import models, schemas, utils
 from .database import engine, get_db
 from .routers import post, user, auth
 
+#%%
+# import os
+# os.getcwd()
+#%%
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(post.router)
 app.include_router(user.router)
 app.include_router(auth.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 load_dotenv(find_dotenv())
 
@@ -54,10 +64,11 @@ def find_post_index(id):
     output = [i if x["id"] == id else None for i, x in enumerate(my_posts)]
     return output[0]
 
-
-@app.get("/")
+file_path = "app/templates/base.html"
+@app.get("/", response_class=FileResponse)
 def read_root():
-    return {"message": "welcome to my API"}
+    # return {"message": "welcome to my API"}
+    return file_path
 
 
 

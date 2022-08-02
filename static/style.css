@@ -1,0 +1,33 @@
+html {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-size: cover;
+    font-family: sans-serif;
+  }
+
+h1 {
+    color: rgb(0, 145, 255);
+}
+
+a {
+  color: rgb(0, 145, 255);
+}
+
+h2 {
+  color: rgb(255, 136, 0);
+}
+
+#section {
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+#bpm {
+  display: inline;
+  flex-wrap: wrap;
+}
