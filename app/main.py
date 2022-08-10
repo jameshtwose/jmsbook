@@ -4,6 +4,7 @@ from fastapi import FastAPI, Response, status, HTTPException, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -13,6 +14,7 @@ import time
 from . import models, schemas, utils
 from .database import engine, get_db
 from .routers import post, user, auth
+
 
 #%%
 # import os
@@ -25,8 +27,22 @@ app = FastAPI()
 app.include_router(post.router)
 app.include_router(user.router)
 app.include_router(auth.router)
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+
+origins = [
+    "http://127.0.0.1:5500/docs/index.html",
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+# templates = Jinja2Templates(directory="templates")
 
 load_dotenv(find_dotenv())
 
@@ -45,30 +61,12 @@ while True:
         print(f"Error: {error}")
         time.sleep(2)
 
-
-my_posts = [{"title": "I get my drinks in California",
-             "content": "ooo that's it",
-             "id": 1},
-            {"title": "I hurt myself at night",
-             "content": "I think I am not okay",
-             "id": 2}
-            ]
-
-
-def find_post(id):
-    output = [x if x["id"] == id else None for x in my_posts]
-    return output[0]
-
-
-def find_post_index(id):
-    output = [i if x["id"] == id else None for i, x in enumerate(my_posts)]
-    return output[0]
-
-file_path = "app/templates/base.html"
-@app.get("/", response_class=FileResponse)
+# file_path = "app/templates/base.html"
+# @app.get("/", response_class=FileResponse)
+@app.get("/")
 def read_root():
-    # return {"message": "welcome to my API"}
-    return file_path
+    return {"message": "welcome to my API"}
+    # return file_path
 
 
 

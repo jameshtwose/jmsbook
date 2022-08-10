@@ -27,7 +27,6 @@ h2 {
   padding: 20px;
 }
 
-#bpm {
-  display: inline;
-  flex-wrap: wrap;
+#container {
+    padding: 20px;
 }
