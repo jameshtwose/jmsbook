@@ -33,16 +33,16 @@ fetch(api_url, options)
     homeDiv.appendChild(heading);
   }
 
-const login_api_url = "http://127.0.0.1:8000/users";
+const login_api_url = "http://127.0.0.1:8000/login";
 const login_options = {
   method: 'POST',
   mode: "cors",
   // credentials: 'omit',
 	headers: {
-    "content-type": "application/json",
+    "content-type": "application/x-www-form-urlencoded",
     "Access-Control-Allow-Origin": "*",
 	},
-    body: JSON.stringify({username: "jms3@gmail.com", password: "pass12345"})
+    body: new URLSearchParams({username: "jms3@gmail.com", password: "pass12345"})
 };
 
 
@@ -67,7 +67,7 @@ fetch(login_api_url, login_options)
     homeDiv.appendChild(heading);
   }
 
-get_user_id_url = "http://127.0.0.1:8000/users/10"
+get_user_id_url = "http://127.0.0.1:8000/users/13"
 const get_user_options = {
     method: 'GET',
     mode: "cors",
