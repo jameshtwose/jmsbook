@@ -11,9 +11,9 @@ from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv, find_dotenv
 import os
 import time
-from . import models, schemas, utils
-from .database import engine, get_db
-from .routers import post, user, auth
+import models, schemas, utils
+from database import engine, get_db
+from routers import post, user, auth
 
 
 #%%
@@ -61,14 +61,14 @@ while True:
         print(f"Error: {error}")
         time.sleep(2)
 
-# file_path = "app/templates/base.html"
+# file_path = "static/index.html"
 # @app.get("/", response_class=FileResponse)
+# def read_root():
+#     return file_path
+
 @app.get("/")
 def read_root():
     return {"message": "welcome to my API"}
-    # return file_path
-
-
 
 
 
