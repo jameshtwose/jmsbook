@@ -50,8 +50,13 @@ load_dotenv(find_dotenv())
 while True:
     try:
         # Connect to an existing database
-        conn = psycopg2.connect(host="localhost", database="jmsbook", user=os.getenv("postgres_user"),
-                                password=os.getenv("postgres_pass"), cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(host=os.getenv("cockroack_db_deta_host"), 
+                                database=os.getenv("cockroack_db_deta_db"), 
+                                user=os.getenv("cockroack_db_deta_user"),
+                                password=os.getenv("cockroack_db_deta_pass"),
+                                port=os.getenv("cockroack_db_deta_port"),
+                                cursor_factory=RealDictCursor)
+        # conn = psycopg2.connect(os.getenv("cockroack_db_deta_connect_string"), cursor_factory=RealDictCursor)
         cursor = conn.cursor()
         print("Database connection was successful!")
         break

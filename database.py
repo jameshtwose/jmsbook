@@ -7,7 +7,7 @@ import os
 load_dotenv(find_dotenv())
 
 engine = create_engine(
-    os.getenv("POSTGRESQL_DATABASE_URL")
+    os.getenv("cockroack_db_deta_connect_string")
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
